@@ -1,4 +1,5 @@
-﻿using System;
+﻿using alert_roster.web.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,13 +11,18 @@ namespace alert_roster.web.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            using (var db = new AlertRosterDbContext())
+            {
+                var messages = from m in db.Messages
+                               orderby m.PostedDate descending
+                               select m;
+
+                return View(messages);
+            }
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
     }
