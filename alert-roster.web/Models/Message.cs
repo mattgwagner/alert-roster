@@ -7,7 +7,7 @@ namespace alert_roster.web.Models
 {
     public class Message
     {
-        public Guid ID { get; set; }
+        public int ID { get; set; }
 
         public DateTime PostedDate { get; set; }
 
