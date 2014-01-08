@@ -13,7 +13,7 @@ namespace alert_roster.web.Controllers
         {
             using (var db = new AlertRosterDbContext())
             {
-                var messages = db.Messages.OrderByDescending(m => m.PostedDate).Take(10);
+                var messages = db.Messages.OrderByDescending(m => m.PostedDate).Take(10).ToList();
 
                 return View(messages);
             }
