@@ -29,13 +29,13 @@ namespace alert_roster.web.Controllers
             return View();
         }
 
-        public ActionResult Post()
+        public ActionResult New()
         {
             return View();
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Post(Message message)
+        public ActionResult New([Bind(Include = "Content")]Message message)
         {
             if (ModelState.IsValid)
             {

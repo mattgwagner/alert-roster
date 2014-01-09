@@ -159,7 +159,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Home\Post.cshtml" />
+    <Content Include="Views\Home\New.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
