@@ -6,6 +6,11 @@
 
 <h2>@ViewBag.Title</h2>
 
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
 @using (Html.BeginForm("New", "Home", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
@@ -31,10 +36,3 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
