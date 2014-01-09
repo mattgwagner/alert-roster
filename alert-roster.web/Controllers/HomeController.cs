@@ -32,7 +32,7 @@ namespace alert_roster.web.Controllers
         }
 
         [AllowAnonymous, HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Login(String password)
+        public ActionResult Login(String password, String ReturnUrl = "")
         {
             if (ReadOnlyPassord == password)
             {
@@ -44,11 +44,15 @@ namespace alert_roster.web.Controllers
             }
             else
             {
-                // Miss, send back to login for now
-                return RedirectToAction("Login");
+                return View("Error");
             }
 
-            return RedirectToAction("Index");
+            if (String.IsNullOrWhiteSpace(ReturnUrl))
+            {
+                return RedirectToAction("Index");
+            }
+
+            return Redirect(ReturnUrl);
         }
 
         public ActionResult New()
