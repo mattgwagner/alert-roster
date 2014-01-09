@@ -13,12 +13,13 @@ namespace alert_roster.web
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-            
+
             RegisterBundles(BundleTable.Bundles);
 
             RegisterRoutes(RouteTable.Routes);
 
             GlobalFilters.Filters.Add(new HandleErrorAttribute());
+            GlobalFilters.Filters.Add(new AuthorizeAttribute());
         }
 
         public static void RegisterRoutes(RouteCollection routes)

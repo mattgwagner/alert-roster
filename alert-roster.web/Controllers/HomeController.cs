@@ -7,7 +7,6 @@ using System.Web.Mvc;
 
 namespace alert_roster.web.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -31,6 +30,7 @@ namespace alert_roster.web.Controllers
             return View();
         }
 
+        [AllowAnonymous, HttpPost, ValidateAntiForgeryToken]
         public ActionResult Login(String password)
         {
             // TODO Check password
