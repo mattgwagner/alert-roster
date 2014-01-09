@@ -67,6 +67,7 @@ namespace alert_roster.web.Controllers
             {
                 using (var db = new AlertRosterDbContext())
                 {
+                    message.PostedDate = DateTime.UtcNow;
                     db.Messages.Add(message);
 
                     db.SaveChanges();

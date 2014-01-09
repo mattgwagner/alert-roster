@@ -6,13 +6,13 @@
 
 <div class="jumbotron">
     <h1>@ViewBag.Title</h1>
-</div>
+</div>$
 
 @foreach (var message in Model)
 {
     <div class="row">
         <div class="col-md-4">
-            <h2>@message.PostedDate</h2>
+            <h2><script>var d = moment('@message.PostedDate').local(); document.write(d);</script></h2>
             <p>
                 @message.Content
             </p>

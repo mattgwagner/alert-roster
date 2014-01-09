@@ -12,10 +12,5 @@ namespace alert_roster.web.Models
         public DateTime PostedDate { get; set; }
 
         public String Content { get; set; }
-
-        public Message()
-        {
-            this.PostedDate = DateTime.UtcNow;
-        }
     }
 }
