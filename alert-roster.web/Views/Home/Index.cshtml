@@ -1,20 +1,18 @@
 ﻿@model IEnumerable<alert_roster.web.Models.Message>
 
 @{
-    ViewBag.Title = "Messages";
+    ViewBag.Title = "Notices";
 }
 
-<div class="jumbotron">
-    <h1>@ViewBag.Title</h1>
-</div>
+<h2>@ViewBag.Title</h2>
 
 @foreach (var message in Model)
 {
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-5">
             <fieldset>
                 <legend>
-                    <script>var d = moment.utc('@message.PostedDate').local(); document.write(d);</script>
+                    Posted <script>var d = moment.utc('@message.PostedDate').local(); document.write(d);</script>
                 </legend>
 
                 @message.Content
