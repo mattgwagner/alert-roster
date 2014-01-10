@@ -11,10 +11,6 @@ namespace alert_roster.web.Controllers
 {
     public class HomeController : Controller
     {
-
-
-
-
         public ActionResult Index()
         {
             using (var db = new AlertRosterDbContext())
@@ -23,6 +19,11 @@ namespace alert_roster.web.Controllers
 
                 return View(messages);
             }
+        }
+
+        public ActionResult About()
+        {
+            return View();
         }
 
         [AllowAnonymous]
