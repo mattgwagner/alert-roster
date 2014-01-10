@@ -15,6 +15,10 @@ namespace alert_roster.web.Controllers
 
         private String ReadWritePassword { get { return ConfigurationManager.AppSettings["Password.ReadWrite"]; } }
 
+        private const String ReadOnlyUser = "ReadOnly";
+
+        private const String ReadWriteUser = "ReadWrite";
+
         public ActionResult Index()
         {
             using (var db = new AlertRosterDbContext())
@@ -36,11 +40,11 @@ namespace alert_roster.web.Controllers
         {
             if (ReadOnlyPassord == password)
             {
-                FormsAuthentication.SetAuthCookie("ReadOnly", true);
+                FormsAuthentication.SetAuthCookie(ReadOnlyUser, true);
             }
             else if (ReadWritePassword == password)
             {
-                FormsAuthentication.SetAuthCookie("ReadWrite", true);
+                FormsAuthentication.SetAuthCookie(ReadWriteUser, true);
             }
             else
             {
@@ -55,12 +59,13 @@ namespace alert_roster.web.Controllers
             return Redirect(ReturnUrl);
         }
 
+        [Authorize(Users = ReadWriteUser)]
         public ActionResult New()
         {
             return View();
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [Authorize(Users = ReadWriteUser), HttpPost, ValidateAntiForgeryToken]
         public ActionResult New([Bind(Include = "Content")]Message message)
         {
             if (ModelState.IsValid)
