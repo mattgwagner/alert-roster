@@ -38,6 +38,7 @@ namespace alert_roster.web
         {
             bundles.Add(new ScriptBundle("~/bundles/libs").Include(
                         "~/Scripts/moment.js",
+                        "~/Scripts/jQuery-{version}.js",
                         "~/Scripts/modernizr-*",
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/respond.js"));
