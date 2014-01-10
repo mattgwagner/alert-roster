@@ -29,7 +29,7 @@ namespace alert_roster.web.Models
             }
             else
             {
-                throw new Exception("Invalid credentials provided.");
+                throw new Exception("Invalid credentials provided: " + password);
             }
         }
     }
