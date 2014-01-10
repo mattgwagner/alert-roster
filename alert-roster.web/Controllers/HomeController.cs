@@ -11,13 +11,9 @@ namespace alert_roster.web.Controllers
 {
     public class HomeController : Controller
     {
-        private String ReadOnlyPassord { get { return ConfigurationManager.AppSettings["Password.ReadOnly"]; } }
 
-        private String ReadWritePassword { get { return ConfigurationManager.AppSettings["Password.ReadWrite"]; } }
 
-        private const String ReadOnlyUser = "ReadOnly";
 
-        private const String ReadWriteUser = "ReadWrite";
 
         public ActionResult Index()
         {
@@ -38,18 +34,7 @@ namespace alert_roster.web.Controllers
         [AllowAnonymous, HttpPost, ValidateAntiForgeryToken]
         public ActionResult Login(String password, String ReturnUrl = "")
         {
-            if (ReadOnlyPassord == password)
-            {
-                FormsAuthentication.SetAuthCookie(ReadOnlyUser, true);
-            }
-            else if (ReadWritePassword == password)
-            {
-                FormsAuthentication.SetAuthCookie(ReadWriteUser, true);
-            }
-            else
-            {
-                return View("Error");
-            }
+            Authentication.Authenticate(password);
 
             if (String.IsNullOrWhiteSpace(ReturnUrl))
             {
@@ -59,13 +44,13 @@ namespace alert_roster.web.Controllers
             return Redirect(ReturnUrl);
         }
 
-        [Authorize(Users = ReadWriteUser)]
+        [Authorize(Users = Authentication.ReadWriteRole)]
         public ActionResult New()
         {
             return View();
         }
 
-        [Authorize(Users = ReadWriteUser), HttpPost, ValidateAntiForgeryToken]
+        [Authorize(Users = Authentication.ReadWriteRole), HttpPost, ValidateAntiForgeryToken]
         public ActionResult New([Bind(Include = "Content")]Message message)
         {
             if (ModelState.IsValid)
