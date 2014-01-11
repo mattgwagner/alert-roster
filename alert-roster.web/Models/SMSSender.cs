@@ -25,6 +25,8 @@ namespace alert_roster.web.Models
                                  where u.SMSEnabled
                                  select u.PhoneNumber;
 
+                // TODO Might switch this to running in parallel or batch sending?
+
                 foreach (var recipient in recipients)
                 {
                     // TODO Handle errors, notify admin on bad #s

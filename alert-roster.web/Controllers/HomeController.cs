@@ -77,9 +77,6 @@ namespace alert_roster.web.Controllers
             return View();
         }
 
-        // For now, unsubscribe is handled through MailGun's injected links
-        // We will still try and send the notifications but they won't make it through
-
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Subscribe(User user)
         {
@@ -87,11 +84,14 @@ namespace alert_roster.web.Controllers
             {
                 using (var db = new AlertRosterDbContext())
                 {
+                    // Check for existing email address
                     if (db.Users.Any(u => u.EmailAddress == user.EmailAddress))
                     {
                         TempData["Message"] = "Already subscribed!";
                         return View("Index");
                     }
+
+                    // TODO Check for existing phone number
 
                     db.Users.Add(user);
 
@@ -114,6 +114,9 @@ namespace alert_roster.web.Controllers
                 return View(db.Users.ToList());
             }
         }
+
+        // For now, unsubscribe is handled through MailGun's injected links
+        // We will still try and send the notifications but they won't make it through
 
         public ActionResult Unsubscribe(int ID)
         {
