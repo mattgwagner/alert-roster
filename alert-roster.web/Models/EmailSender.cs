@@ -37,7 +37,6 @@ namespace alert_roster.web.Models
                                  select u.EmailAddress;
 
                 message.From = new MailAddress(FromAddress);
-                message.To.Add(new MailAddress(FromAddress));
 
                 message.Subject = EmailSubject;
 

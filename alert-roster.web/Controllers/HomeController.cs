@@ -59,7 +59,7 @@ namespace alert_roster.web.Controllers
 
                     db.SaveChanges();
 
-                    // new EmailSender().Send(message.Content);
+                    new EmailSender().Send(message.Content);
 
                     TempData["Message"] = "Message posted!";
                 }
