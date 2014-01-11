@@ -1,4 +1,5 @@
-﻿using System;
+﻿using alert_roster.web.Migrations;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -17,5 +18,10 @@ namespace alert_roster.web.Models
         public DbSet<Message> Messages { get; set; }
 
         public DbSet<User> Users { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<AlertRosterDbContext, Configuration>());
+        }
     }
 }
