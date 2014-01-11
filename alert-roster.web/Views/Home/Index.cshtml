@@ -13,11 +13,14 @@
         <div class="col-md-5">
             <fieldset>
                 <legend>
-                    Posted <script>var d = moment.utc(@message.PostedDate.GetEpochTicks()).local().fromNow(); document.write(d);</script>
+                    Posted
+                    <script>var d = moment.utc(@message.PostedDate.GetEpochTicks()).local().fromNow(); document.write(d);</script>
                 </legend>
 
                 @message.Content
             </fieldset>
         </div>
     </div>
+
+    <br />
 }
