@@ -10,6 +10,8 @@ namespace alert_roster.web.Models
 {
     public class EmailSender
     {
+        public static String EmailSubject = ConfigurationManager.AppSettings["Email.Subject"];
+
         public static String FromAddress = ConfigurationManager.AppSettings["Email.FromAddress"];
 
         public static String SmtpServer = ConfigurationManager.AppSettings["MAILGUN_SMTP_SERVER"];
@@ -32,14 +34,14 @@ namespace alert_roster.web.Models
                 message.From = new MailAddress(FromAddress);
                 message.To.Add(new MailAddress(FromAddress));
 
+                message.Subject = EmailSubject;
+
                 foreach (var recipient in Recipients)
                 {
                     message.Bcc.Add(new MailAddress(recipient));
                 }
 
-                message.Subject = "";
-
-                message.Body = "";
+                message.Body = content;
 
                 smtp.Send(message);
             }
