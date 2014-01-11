@@ -26,7 +26,7 @@ namespace alert_roster.web.Models
 
         public static Boolean IsBodyHtml = false;
 
-        public void Send(String content)
+        public static void Send(String content)
         {
             using (var db = new AlertRosterDbContext())
             using (var smtp = new SmtpClient { Host = SmtpServer, Port = SmtpPort, EnableSsl = EnableSsl, Credentials = new NetworkCredential { UserName = SmtpUser, Password = SmtpPassword } })

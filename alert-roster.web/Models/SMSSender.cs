@@ -15,7 +15,7 @@ namespace alert_roster.web.Models
 
         public static String AuthToken = ConfigurationManager.AppSettings["Twilio.AuthToken"];
 
-        public void Send(String content)
+        public static void Send(String content)
         {
             var twilio = new TwilioRestClient(AccountSid, AuthToken);
 
