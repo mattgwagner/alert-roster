@@ -13,9 +13,10 @@ namespace alert_roster.web.Models
         [Required]
         public String Name { get; set; }
 
-        [EmailAddress]
+        [EmailAddress, Display(Name = "Email Address")]
         public String EmailAddress { get; set; }
 
+        [Display(Name = "Enable Email Notifications")]
         public Boolean EmailEnabled { get; set; }
     }
 }
