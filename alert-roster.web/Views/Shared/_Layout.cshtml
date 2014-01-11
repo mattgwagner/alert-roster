@@ -23,7 +23,11 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <!-- <li>@Html.ActionLink("Subscribe", "Subscribe", "Home")</li> -->
-                    <li>@Html.ActionLink("Post New Message", "New", "Home")</li>
+                    @if (alert_roster.web.Models.Authentication.ReadWriteRole == User.Identity.Name)
+                    {
+                        <li>@Html.ActionLink("Post New Message", "New", "Home")</li>
+                        <li>@Html.ActionLink("Subscriptions", "Subscriptions", "Home")</li>
+                    }
                 </ul>
             </div>
         </div>
