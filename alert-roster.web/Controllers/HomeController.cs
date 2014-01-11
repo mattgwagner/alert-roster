@@ -21,6 +21,7 @@ namespace alert_roster.web.Controllers
             }
         }
 
+        [AllowAnonymous]
         public ActionResult About()
         {
             return View();
