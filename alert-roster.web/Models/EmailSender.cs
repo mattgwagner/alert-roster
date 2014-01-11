@@ -10,6 +10,8 @@ namespace alert_roster.web.Models
 {
     public class EmailSender
     {
+        public static String FromAddress = ConfigurationManager.AppSettings["Email.FromAddress"];
+
         public static String SmtpServer = ConfigurationManager.AppSettings["MAILGUN_SMTP_SERVER"];
 
         public static int SmtpPort = int.Parse(ConfigurationManager.AppSettings["MAILGUN_SMTP_PORT"]);
@@ -20,10 +22,12 @@ namespace alert_roster.web.Models
 
         public static Boolean EnableSsl = true;
 
+        public static Boolean IsBodyHtml = false;
+
         public void Send(String content, IEnumerable<String> Recipients)
         {
             using (var smtp = new SmtpClient { Host = SmtpServer, Port = SmtpPort, EnableSsl = EnableSsl, Credentials = new NetworkCredential { UserName = SmtpUser, Password = SmtpPassword } })
-            using (var message = new MailMessage { IsBodyHtml = false })
+            using (var message = new MailMessage { IsBodyHtml = IsBodyHtml })
             {
                 message.From = new MailAddress("");
 
@@ -40,5 +44,6 @@ namespace alert_roster.web.Models
 
                 smtp.Send(message);
             }
+        }
     }
 }
