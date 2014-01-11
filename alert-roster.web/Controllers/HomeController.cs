@@ -82,7 +82,11 @@ namespace alert_roster.web.Controllers
             {
                 using (var db = new AlertRosterDbContext())
                 {
-                    // TODO Check if user is already subscribed
+                    if (db.Users.Any(u => u.EmailAddress == user.EmailAddress))
+                    {
+                        TempData["Message"] = "Already subscribed!";
+                        return View("Index");
+                    }
 
                     db.Users.Add(user);
 
