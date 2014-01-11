@@ -42,6 +42,12 @@
                 @Html.DisplayFor(modelItem => item.EmailEnabled)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SMSEnabled)
+            </td>
+            <td>
                 @Html.ActionLink("Unsubscribe", "Unsubscribe", new { id = item.ID })
             </td>
         </tr>
