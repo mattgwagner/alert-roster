@@ -61,6 +61,8 @@ namespace alert_roster.web.Controllers
 
                     new EmailSender().Send(message.Content);
 
+                    new SMSSender().Send(message.Content);
+
                     TempData["Message"] = "Message posted!";
                 }
 
