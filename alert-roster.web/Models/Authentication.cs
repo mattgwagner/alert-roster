@@ -27,10 +27,6 @@ namespace alert_roster.web.Models
             {
                 FormsAuthentication.SetAuthCookie(Authentication.ReadWriteRole, true);
             }
-            else
-            {
-                throw new Exception("Invalid credentials provided: " + password);
-            }
         }
     }
 }
