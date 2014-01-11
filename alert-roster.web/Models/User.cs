@@ -18,5 +18,11 @@ namespace alert_roster.web.Models
 
         [Display(Name = "Enable Email Notifications")]
         public Boolean EmailEnabled { get; set; }
+
+        [Phone, Display(Name = "Cell Phone Number")]
+        public String PhoneNumber { get; set; }
+
+        [Display(Name = "Enable SMS Notifications")]
+        public Boolean SMSEnabled { get; set; }
     }
 }
