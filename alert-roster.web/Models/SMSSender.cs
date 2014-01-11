@@ -27,6 +27,8 @@ namespace alert_roster.web.Models
 
                 foreach (var recipient in recipients)
                 {
+                    // TODO Handle errors, notify admin on bad #s
+
                     twilio.SendSmsMessage(PhoneNumber, recipient, content);
                 }
             }
