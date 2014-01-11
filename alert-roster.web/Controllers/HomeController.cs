@@ -58,6 +58,8 @@ namespace alert_roster.web.Controllers
                     db.Messages.Add(message);
 
                     db.SaveChanges();
+
+                    TempData["Message"] = "Message posted!";
                 }
 
                 return RedirectToAction("Index");
