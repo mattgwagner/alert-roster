@@ -10,6 +10,11 @@
     @Html.ActionLink("Create New", "Subscribe")
 </p>
 
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">@TempData["Message"]</div>
+}
+
 <table class="table">
     <tr>
         <th>
@@ -37,7 +42,7 @@
                 @Html.DisplayFor(modelItem => item.EmailEnabled)
             </td>
             <td>
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                @Html.ActionLink("Unsubscribe", "Unsubscribe", new { id = item.ID })
             </td>
         </tr>
     }

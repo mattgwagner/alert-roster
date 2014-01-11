@@ -112,5 +112,20 @@ namespace alert_roster.web.Controllers
                 return View(db.Users.ToList());
             }
         }
+
+        public ActionResult Unsubscribe(int ID)
+        {
+            using (var db = new AlertRosterDbContext())
+            {
+                var user = db.Users.Find(ID);
+
+                db.Entry(user).State = System.Data.Entity.EntityState.Deleted;
+                db.SaveChanges();
+
+                TempData["Message"] = "Successfully unsubscribed!";
+
+                return RedirectToAction("Subscriptions");
+            }
+        }
     }
 }
