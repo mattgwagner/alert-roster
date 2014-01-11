@@ -118,6 +118,9 @@
     <EmbeddedResource Include="Migrations\201401102009062_InitialCreate.resx">
       <DependentUpon>201401102009062_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401110318199_Users.resx">
+      <DependentUpon>201401110318199_Users.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
@@ -127,6 +130,10 @@
     <Compile Include="Migrations\201401102009062_InitialCreate.cs" />
     <Compile Include="Migrations\201401102009062_InitialCreate.Designer.cs">
       <DependentUpon>201401102009062_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201401110318199_Users.cs" />
+    <Compile Include="Migrations\201401110318199_Users.Designer.cs">
+      <DependentUpon>201401110318199_Users.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AlertRosterDbContext.cs" />
