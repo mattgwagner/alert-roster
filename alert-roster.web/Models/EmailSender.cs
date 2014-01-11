@@ -29,9 +29,8 @@ namespace alert_roster.web.Models
             using (var smtp = new SmtpClient { Host = SmtpServer, Port = SmtpPort, EnableSsl = EnableSsl, Credentials = new NetworkCredential { UserName = SmtpUser, Password = SmtpPassword } })
             using (var message = new MailMessage { IsBodyHtml = IsBodyHtml })
             {
-                message.From = new MailAddress("");
-
-                message.To.Add(new MailAddress(""));
+                message.From = new MailAddress(FromAddress);
+                message.To.Add(new MailAddress(FromAddress));
 
                 foreach (var recipient in Recipients)
                 {
