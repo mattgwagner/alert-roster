@@ -26,6 +26,12 @@
         <th>
             @Html.DisplayNameFor(model => model.EmailEnabled)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SMSEnabled)
+        </th>
         <th></th>
     </tr>
 
@@ -40,6 +46,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EmailEnabled)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SMSEnabled)
             </td>
             <td>
                 @Html.ActionLink("Unsubscribe", "Unsubscribe", new { id = item.ID })
