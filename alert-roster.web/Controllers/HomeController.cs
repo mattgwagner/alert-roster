@@ -34,16 +34,11 @@ namespace alert_roster.web.Controllers
         }
 
         [AllowAnonymous, HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Login(String password, String ReturnUrl = "")
+        public ActionResult Login(String password)
         {
             Authentication.Authenticate(password);
 
-            if (String.IsNullOrWhiteSpace(ReturnUrl))
-            {
-                return RedirectToAction("Index");
-            }
-
-            return Redirect(ReturnUrl);
+            return RedirectToAction("Index");
         }
 
         [Authorize(Users = Authentication.ReadWriteRole)]
