@@ -11,7 +11,7 @@ namespace alert_roster.web.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = false;
+            AutomaticMigrationDataLossAllowed = true;
             ContextKey = "alert_roster.web.Models.AlertRosterDbContext";
         }
 
