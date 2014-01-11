@@ -75,6 +75,9 @@ namespace alert_roster.web.Controllers
             return View();
         }
 
+        // For now, unsubscribe is handled through MailGun's injected links
+        // We will still try and send the notifications but they won't make it through
+
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Subscribe(User user)
         {
