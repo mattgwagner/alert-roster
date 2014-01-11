@@ -131,6 +131,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AlertRosterDbContext.cs" />
     <Compile Include="Models\Authentication.cs" />
+    <Compile Include="Models\EmailSender.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -171,6 +172,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
     <Content Include="Views\Home\Subscribe.cshtml" />
+    <Content Include="Views\Home\Subscriptions.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

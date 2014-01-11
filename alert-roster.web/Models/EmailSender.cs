@@ -26,17 +26,22 @@ namespace alert_roster.web.Models
 
         public static Boolean IsBodyHtml = false;
 
-        public void Send(String content, IEnumerable<String> Recipients)
-        {
+        public void Send(String content)
+        {           
+            using (var db = new AlertRosterDbContext())
             using (var smtp = new SmtpClient { Host = SmtpServer, Port = SmtpPort, EnableSsl = EnableSsl, Credentials = new NetworkCredential { UserName = SmtpUser, Password = SmtpPassword } })
             using (var message = new MailMessage { IsBodyHtml = IsBodyHtml })
             {
+                var recipients = from u in db.Users
+                                 where u.EmailEnabled
+                                 select u.EmailAddress;
+
                 message.From = new MailAddress(FromAddress);
                 message.To.Add(new MailAddress(FromAddress));
 
                 message.Subject = EmailSubject;
 
-                foreach (var recipient in Recipients)
+                foreach (var recipient in recipients)
                 {
                     message.Bcc.Add(new MailAddress(recipient));
                 }

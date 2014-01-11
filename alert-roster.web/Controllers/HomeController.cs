@@ -59,6 +59,8 @@ namespace alert_roster.web.Controllers
 
                     db.SaveChanges();
 
+                    // new EmailSender().Send(message.Content);
+
                     TempData["Message"] = "Message posted!";
                 }
 
@@ -80,6 +82,8 @@ namespace alert_roster.web.Controllers
             {
                 using (var db = new AlertRosterDbContext())
                 {
+                    // TODO Check if user is already subscribed
+
                     db.Users.Add(user);
 
                     db.SaveChanges();
@@ -91,6 +95,15 @@ namespace alert_roster.web.Controllers
             }
 
             return View(user);
+        }
+
+        [Authorize(Users = Authentication.ReadWriteRole)]
+        public ActionResult Subscriptions()
+        {
+            using (var db = new AlertRosterDbContext())
+            {
+                return View(db.Users);
+            }
         }
     }
 }
