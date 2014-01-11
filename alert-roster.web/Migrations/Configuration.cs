@@ -19,10 +19,10 @@ namespace alert_roster.web.Migrations
         {
             //  This method will be called after migrating to the latest version.
 
-            context.Messages.AddOrUpdate(
-                m => m.Content,
-                new Message { PostedDate = DateTime.UtcNow, Content = "This is the initial, test message posting" }
-                );
+            //context.Messages.AddOrUpdate(
+            //    m => m.Content,
+            //    new Message { PostedDate = DateTime.UtcNow, Content = "This is the initial, test message posting" }
+            //    );
         }
     }
 }
