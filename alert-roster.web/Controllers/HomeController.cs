@@ -102,7 +102,7 @@ namespace alert_roster.web.Controllers
         {
             using (var db = new AlertRosterDbContext())
             {
-                return View(db.Users);
+                return View(db.Users.ToList());
             }
         }
     }
