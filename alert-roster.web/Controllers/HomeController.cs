@@ -65,5 +65,30 @@ namespace alert_roster.web.Controllers
 
             return View(message);
         }
+
+        public ActionResult Subscribe()
+        {
+            return View();
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Subscribe(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var db = new AlertRosterDbContext())
+                {
+                    db.Users.Add(user);
+
+                    db.SaveChanges();
+
+                    TempData["Message"] = "Successfully subscribed!";
+                }
+
+                return RedirectToAction("Index");
+            }
+
+            return View(user);
+        }
     }
 }
