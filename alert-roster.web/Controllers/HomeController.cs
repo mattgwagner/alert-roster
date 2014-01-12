@@ -72,35 +72,45 @@ namespace alert_roster.web.Controllers
             return View(message);
         }
 
-        public ActionResult Subscribe()
+        public ActionResult Subscription(int? ID)
         {
-            return View();
+            using (var db = new AlertRosterDbContext())
+            {
+                var subscription = db.Users.SingleOrDefault(s => s.ID == ID);
+
+                return View(subscription);
+            }
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Subscribe(User user)
+        public ActionResult Subscription(User user)
         {
             if (ModelState.IsValid)
             {
                 using (var db = new AlertRosterDbContext())
                 {
-                    // Check for existing email address
-                    if (db.Users.Any(u => u.EmailAddress == user.EmailAddress))
+                    // Add/Update
+
+                    var model = (from u in db.Users where u.ID == user.ID select u).SingleOrDefault();
+
+                    if (model == null)
                     {
-                        TempData["Message"] = "Already subscribed!";
-                        return View("Index");
+                        model = db.Users.Create();
+                        db.Entry(model).State = System.Data.Entity.EntityState.Added;
                     }
 
-                    // TODO Check for existing phone number
-
-                    db.Users.Add(user);
+                    model.Name = user.Name;
+                    model.EmailAddress = user.EmailAddress;
+                    model.EmailEnabled = user.EmailEnabled;
+                    model.PhoneNumber = user.PhoneNumber;
+                    model.SMSEnabled = user.SMSEnabled;
 
                     db.SaveChanges();
 
-                    TempData["Message"] = "Successfully subscribed!";
-                }
+                    TempData["Message"] = "Subscription updated!";
 
-                return RedirectToAction("Index");
+                    return RedirectToAction("Subscriptions");
+                }
             }
 
             return View(user);
