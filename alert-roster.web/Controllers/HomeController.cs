@@ -97,7 +97,11 @@ namespace alert_roster.web.Controllers
                     db.Entry(model).State = System.Data.Entity.EntityState.Added;
                 }
 
-                UpdateModel(model);
+                model.Name = user.Name;
+                model.EmailAddress = user.EmailAddress;
+                model.EmailEnabled = user.EmailEnabled;
+                model.PhoneNumber = user.PhoneNumber;
+                model.SMSEnabled = user.SMSEnabled;
 
                 db.SaveChanges();
 
