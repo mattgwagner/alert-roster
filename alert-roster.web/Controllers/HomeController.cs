@@ -85,35 +85,26 @@ namespace alert_roster.web.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Subscription(User user)
         {
-            if (ModelState.IsValid)
+            using (var db = new AlertRosterDbContext())
             {
-                using (var db = new AlertRosterDbContext())
+                // Add/Update
+
+                var model = db.Users.Find(user.ID);
+
+                if (model == null)
                 {
-                    // Add/Update
-
-                    var model = (from u in db.Users where u.ID == user.ID select u).SingleOrDefault();
-
-                    if (model == null)
-                    {
-                        model = db.Users.Create();
-                        db.Entry(model).State = System.Data.Entity.EntityState.Added;
-                    }
-
-                    model.Name = user.Name;
-                    model.EmailAddress = user.EmailAddress;
-                    model.EmailEnabled = user.EmailEnabled;
-                    model.PhoneNumber = user.PhoneNumber;
-                    model.SMSEnabled = user.SMSEnabled;
-
-                    db.SaveChanges();
-
-                    TempData["Message"] = "Subscription updated!";
-
-                    return RedirectToAction("Subscriptions");
+                    model = db.Users.Create();
+                    db.Entry(model).State = System.Data.Entity.EntityState.Added;
                 }
-            }
 
-            return View(user);
+                UpdateModel(model);
+
+                db.SaveChanges();
+
+                TempData["Message"] = "Subscription updated!";
+
+                return RedirectToAction("Subscriptions");
+            }
         }
 
         [Authorize(Users = Authentication.ReadWriteRole)]
