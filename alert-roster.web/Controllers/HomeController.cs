@@ -75,9 +75,7 @@ namespace alert_roster.web.Controllers
         [HttpGet]
         public ActionResult Subscription(int? ID)
         {
-            var subscription = db.Users.SingleOrDefault(s => s.ID == ID);
-
-            return View(subscription);
+            return View(db.Users.Find(ID));
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -137,9 +135,7 @@ namespace alert_roster.web.Controllers
         [HttpGet, Authorize(Users = Authentication.ReadWriteRole)]
         public ActionResult Group(int? ID)
         {
-            var group = db.Groups.SingleOrDefault(g => g.ID == ID);
-
-            return View(group);
+            return View(db.Groups.Find(ID));
         }
 
         [HttpPost, Authorize(Users = Authentication.ReadWriteRole)]
