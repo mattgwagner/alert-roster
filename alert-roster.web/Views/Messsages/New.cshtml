@@ -6,7 +6,7 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("New", "Home", FormMethod.Post))
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
@@ -17,7 +17,7 @@
         <div class="alert alert-info">
             Please limit messages to < 160 characters. Note that, due to notifications being sent,
             editing or deleting a post is currently unavailable.
-        </div> 
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Content, new { @class = "control-label col-md-2" })

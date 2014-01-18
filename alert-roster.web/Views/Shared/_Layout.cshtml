@@ -22,12 +22,12 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <!-- <li>@Html.ActionLink("Subscribe", "Subscribe", "Home")</li> -->
+                    <!-- <li>@Html.ActionLink("Subscribe", "Subscribe", "Account")</li> -->
                     @if (alert_roster.web.Models.Authentication.ReadWriteRole == User.Identity.Name)
                     {
-                        <li>@Html.ActionLink("Post New Message", "New", "Home")</li>
-                        <li>@Html.ActionLink("Subscriptions", "Subscriptions", "Home")</li>
-                        <li>@Html.ActionLink("Groups", "Groups", "Home")</li>
+                        <li>@Html.ActionLink("Post New Message", "New", "Messages")</li>
+                        <li>@Html.ActionLink("Subscriptions", "Subscriptions", "Account")</li>
+                        <li>@Html.ActionLink("Groups", "Groups", "Groups")</li>
                     }
                 </ul>
             </div>

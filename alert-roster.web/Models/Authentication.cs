@@ -31,5 +31,10 @@ namespace alert_roster.web.Models
                 FormsAuthentication.SetAuthCookie(Authentication.ReadWriteRole, true);
             }
         }
+
+        public static void Logout()
+        {
+            FormsAuthentication.SignOut();
+        }
     }
 }
