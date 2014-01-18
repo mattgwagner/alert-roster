@@ -40,7 +40,7 @@ namespace alert_roster.web.Models
 
                     message.Subject = EmailSubject;
 
-                    foreach (var recipient in recipients)
+                    foreach (var recipient in Recipients)
                     {
                         message.Bcc.Add(new MailAddress(recipient));
                     }
