@@ -141,7 +141,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\MesssagesController.cs" />
+    <Compile Include="Controllers\MessasgesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -202,12 +202,12 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Messsages\New.cshtml" />
+    <Content Include="Views\Messages\New.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
     <Content Include="Views\Account\Subscription.cshtml" />
-    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Account\Subscriptions.cshtml" />
     <Content Include="Views\Groups\Index.cshtml" />
     <Content Include="Views\Groups\Group.cshtml" />
   </ItemGroup>

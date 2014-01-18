@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace alert_roster.web.Controllers
 {
-    public class MesssagesController : Controller
+    public class MessasgesController : Controller
     {
         private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
