@@ -1,4 +1,6 @@
 ﻿using NLog;
+using NLog.Config;
+using NLog.Targets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,9 +61,21 @@ namespace alert_roster.web
 
         public static void ConfigureLogging()
         {
+            // TODO NLog configuration
+
             var config = new NLog.Config.LoggingConfiguration();
 
-            // TODO NLog configuration
+#if (!DEBUG)
+            // Database target?
+#endif
+
+            var fileTarget = new FileTarget { CreateDirs = true, FileName = "Log.txt" };
+
+            config.AddTarget("fileTarget", fileTarget);
+
+            var fileRule = new LoggingRule("*", LogLevel.Debug, fileTarget);
+
+            config.LoggingRules.Add(fileRule);
 
             LogManager.Configuration = config;
         }
