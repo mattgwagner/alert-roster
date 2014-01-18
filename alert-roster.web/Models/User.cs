@@ -24,5 +24,7 @@ namespace alert_roster.web.Models
 
         [Display(Name = "Enable SMS Notifications")]
         public Boolean SMSEnabled { get; set; }
+
+        public virtual ICollection<Group> Groups { get; set; }
     }
 }

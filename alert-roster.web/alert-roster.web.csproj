@@ -155,6 +155,7 @@
     <Compile Include="Models\AlertRosterDbContext.cs" />
     <Compile Include="Models\Authentication.cs" />
     <Compile Include="Models\EmailSender.cs" />
+    <Compile Include="Models\Group.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\SMSSender.cs" />
     <Compile Include="Models\User.cs" />
