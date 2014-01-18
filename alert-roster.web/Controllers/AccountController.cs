@@ -15,6 +15,12 @@ namespace alert_roster.web.Controllers
 
         private readonly AlertRosterDbContext db = new AlertRosterDbContext();
 
+        [HttpGet, Authorize(Users = Authentication.ReadWriteRole)]
+        public ActionResult Subscriptions()
+        {
+            return Index(db.Users.OrderBy(u => u.Name).ToList());
+        }
+
         [HttpGet, AllowAnonymous]
         public ActionResult Login()
         {
@@ -66,12 +72,6 @@ namespace alert_roster.web.Controllers
             TempData["Message"] = "Subscription updated!";
 
             return RedirectToAction("Subscriptions");
-        }
-
-        [HttpGet, Authorize(Users = Authentication.ReadWriteRole)]
-        public ActionResult Subscriptions()
-        {
-            return View(db.Users.OrderBy(u => u.Name).ToList());
         }
 
         // For now, unsubscribe is handled through MailGun's injected links

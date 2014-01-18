@@ -207,7 +207,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
     <Content Include="Views\Account\Subscription.cshtml" />
-    <Content Include="Views\Account\Subscriptions.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Groups\Index.cshtml" />
     <Content Include="Views\Groups\Group.cshtml" />
   </ItemGroup>
