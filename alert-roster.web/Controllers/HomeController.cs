@@ -128,7 +128,7 @@ namespace alert_roster.web.Controllers
         // For now, unsubscribe is handled through MailGun's injected links
         // We will still try and send the notifications but they won't make it through
 
-        [HttpGet]
+        [HttpGet, Authorize(Users = Authentication.ReadWriteRole)]
         public ActionResult Unsubscribe(int ID)
         {
             using (var db = new AlertRosterDbContext())
@@ -144,7 +144,7 @@ namespace alert_roster.web.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Users = Authentication.ReadWriteRole)]
         public ActionResult Groups()
         {
             using (var db = new AlertRosterDbContext())
@@ -153,7 +153,7 @@ namespace alert_roster.web.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(Users = Authentication.ReadWriteRole)]
         public ActionResult Group(int? ID)
         {
             using (var db = new AlertRosterDbContext())
@@ -164,7 +164,7 @@ namespace alert_roster.web.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Users = Authentication.ReadWriteRole)]
         public ActionResult Group(Group group)
         {
             using (var db = new AlertRosterDbContext())
