@@ -14,15 +14,14 @@ namespace alert_roster.web.Controllers
     {
         private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
+        private readonly AlertRosterDbContext db = new AlertRosterDbContext();
+
         [HttpGet]
         public ActionResult Index()
         {
-            using (var db = new AlertRosterDbContext())
-            {
-                var messages = db.Messages.OrderByDescending(m => m.PostedDate).Take(10).ToList();
+            var messages = db.Messages.OrderByDescending(m => m.PostedDate).Take(10).ToList();
 
-                return View(messages);
-            }
+            return View(messages);
         }
 
         [HttpGet, AllowAnonymous]
@@ -56,19 +55,16 @@ namespace alert_roster.web.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (var db = new AlertRosterDbContext())
-                {
-                    message.PostedDate = DateTime.UtcNow;
-                    db.Messages.Add(message);
+                message.PostedDate = DateTime.UtcNow;
+                db.Messages.Add(message);
 
-                    db.SaveChanges();
+                db.SaveChanges();
 
-                    EmailSender.Send(db.Users.Where(u => u.EmailEnabled).Select(u => u.EmailAddress), message.Content);
+                EmailSender.Send(db.Users.Where(u => u.EmailEnabled).Select(u => u.EmailAddress), message.Content);
 
-                    SMSSender.Send(db.Users.Where(u => u.SMSEnabled).Select(u => u.PhoneNumber), message.Content);
+                SMSSender.Send(db.Users.Where(u => u.SMSEnabled).Select(u => u.PhoneNumber), message.Content);
 
-                    TempData["Message"] = "Message posted!";
-                }
+                TempData["Message"] = "Message posted!";
 
                 return RedirectToAction("Index");
             }
@@ -79,50 +75,41 @@ namespace alert_roster.web.Controllers
         [HttpGet]
         public ActionResult Subscription(int? ID)
         {
-            using (var db = new AlertRosterDbContext())
-            {
-                var subscription = db.Users.SingleOrDefault(s => s.ID == ID);
+            var subscription = db.Users.SingleOrDefault(s => s.ID == ID);
 
-                return View(subscription);
-            }
+            return View(subscription);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Subscription(User user)
         {
-            using (var db = new AlertRosterDbContext())
+            // Add/Update
+
+            var model = db.Users.Find(user.ID);
+
+            if (model == null)
             {
-                // Add/Update
-
-                var model = db.Users.Find(user.ID);
-
-                if (model == null)
-                {
-                    model = db.Users.Create();
-                    db.Entry(model).State = System.Data.Entity.EntityState.Added;
-                }
-
-                model.Name = user.Name;
-                model.EmailAddress = user.EmailAddress;
-                model.EmailEnabled = user.EmailEnabled;
-                model.PhoneNumber = user.PhoneNumber;
-                model.SMSEnabled = user.SMSEnabled;
-
-                db.SaveChanges();
-
-                TempData["Message"] = "Subscription updated!";
-
-                return RedirectToAction("Subscriptions");
+                model = db.Users.Create();
+                db.Entry(model).State = System.Data.Entity.EntityState.Added;
             }
+
+            model.Name = user.Name;
+            model.EmailAddress = user.EmailAddress;
+            model.EmailEnabled = user.EmailEnabled;
+            model.PhoneNumber = user.PhoneNumber;
+            model.SMSEnabled = user.SMSEnabled;
+
+            db.SaveChanges();
+
+            TempData["Message"] = "Subscription updated!";
+
+            return RedirectToAction("Subscriptions");
         }
 
         [HttpGet, Authorize(Users = Authentication.ReadWriteRole)]
         public ActionResult Subscriptions()
         {
-            using (var db = new AlertRosterDbContext())
-            {
-                return View(db.Users.ToList());
-            }
+            return View(db.Users.ToList());
         }
 
         // For now, unsubscribe is handled through MailGun's injected links
@@ -131,48 +118,38 @@ namespace alert_roster.web.Controllers
         [HttpGet, Authorize(Users = Authentication.ReadWriteRole)]
         public ActionResult Unsubscribe(int ID)
         {
-            using (var db = new AlertRosterDbContext())
-            {
-                var user = db.Users.Find(ID);
+            var user = db.Users.Find(ID);
 
-                db.Entry(user).State = System.Data.Entity.EntityState.Deleted;
-                db.SaveChanges();
+            db.Entry(user).State = System.Data.Entity.EntityState.Deleted;
+            db.SaveChanges();
 
-                TempData["Message"] = "Successfully unsubscribed!";
+            TempData["Message"] = "Successfully unsubscribed!";
 
-                return RedirectToAction("Subscriptions");
-            }
+            return RedirectToAction("Subscriptions");
         }
 
         [HttpGet, Authorize(Users = Authentication.ReadWriteRole)]
         public ActionResult Groups()
         {
-            using (var db = new AlertRosterDbContext())
-            {
-                return View(db.Groups.ToList());
-            }
+            return View(db.Groups.ToList());
         }
 
         [HttpGet, Authorize(Users = Authentication.ReadWriteRole)]
         public ActionResult Group(int? ID)
         {
-            using (var db = new AlertRosterDbContext())
-            {
-                var group = db.Groups.SingleOrDefault(g => g.ID == ID);
+            var group = db.Groups.SingleOrDefault(g => g.ID == ID);
 
-                return View(group);
-            }
+            return View(group);
         }
 
         [HttpPost, Authorize(Users = Authentication.ReadWriteRole)]
         public ActionResult Group(Group group)
         {
-            using (var db = new AlertRosterDbContext())
-            {
-                // TODO Create/Update group
+            // TODO Create/Update group
 
-                return View();
-            }
+            TempData["Message"] = "Group updated!";
+
+            return RedirectToAction("Groups");
         }
 
         [HttpPost]
