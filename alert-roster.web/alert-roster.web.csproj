@@ -206,6 +206,7 @@
     <Content Include="Views\Home\Subscription.cshtml" />
     <Content Include="Views\Home\Subscriptions.cshtml" />
     <Content Include="Views\Home\Groups.cshtml" />
+    <Content Include="Views\Home\Group.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
