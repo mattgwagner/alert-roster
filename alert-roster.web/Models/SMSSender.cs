@@ -18,24 +18,17 @@ namespace alert_roster.web.Models
 
         public static String AuthToken = ConfigurationManager.AppSettings["Twilio.AuthToken"];
 
-        public static void Send(String content)
+        public static void Send(IEnumerable<String> Recipients, String content)
         {
             var twilio = new TwilioRestClient(AccountSid, AuthToken);
 
-            using (var db = new AlertRosterDbContext())
+            // TODO Might switch this to running in parallel or batch sending?
+
+            foreach (var recipient in Recipients)
             {
-                var recipients = from u in db.Users
-                                 where u.SMSEnabled
-                                 select u.PhoneNumber;
+                // TODO Handle errors, notify admin on bad #s
 
-                // TODO Might switch this to running in parallel or batch sending?
-
-                foreach (var recipient in recipients)
-                {
-                    // TODO Handle errors, notify admin on bad #s
-
-                    twilio.SendSmsMessage(PhoneNumber, recipient, content);
-                }
+                twilio.SendSmsMessage(PhoneNumber, recipient, content);
             }
         }
     }

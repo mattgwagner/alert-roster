@@ -62,9 +62,9 @@ namespace alert_roster.web.Controllers
 
                     db.SaveChanges();
 
-                    EmailSender.Send(message.Content);
+                    EmailSender.Send(db.Users.Where(u => u.EmailEnabled).Select(u => u.EmailAddress), message.Content);
 
-                    SMSSender.Send(message.Content);
+                    SMSSender.Send(db.Users.Where(u => u.SMSEnabled).Select(u => u.PhoneNumber), message.Content);
 
                     TempData["Message"] = "Message posted!";
                 }
@@ -144,6 +144,12 @@ namespace alert_roster.web.Controllers
         [HttpPost]
         public ActionResult IncomingMessage(String To, String From, String Body)
         {
+            // TODO Process incoming messages
+
+            // For now, just shoot me an email with the content
+
+            EmailSender.Send(new[] { "mattgwagner@gmail.com" }, String.Format("Message from {0}: {1}", From, Body));
+
             // Check FROM to see if they're a group member
 
             // Do the requested action
