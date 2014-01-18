@@ -18,7 +18,7 @@ namespace alert_roster.web.Controllers
         [HttpGet, Authorize(Users = Authentication.ReadWriteRole)]
         public ActionResult Subscriptions()
         {
-            return Index(db.Users.OrderBy(u => u.Name).ToList());
+            return View(db.Users.OrderBy(u => u.Name).ToList());
         }
 
         [HttpGet, AllowAnonymous]
