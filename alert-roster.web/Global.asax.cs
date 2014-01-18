@@ -15,6 +15,8 @@ namespace alert_roster.web
 
         protected void Application_Start()
         {
+            ConfigureLogging();
+
             AreaRegistration.RegisterAllAreas();
 
             RegisterBundles(BundleTable.Bundles);
@@ -53,6 +55,15 @@ namespace alert_roster.web
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+        }
+
+        public static void ConfigureLogging()
+        {
+            var config = new NLog.Config.LoggingConfiguration();
+
+            // TODO NLog configuration
+
+            LogManager.Configuration = config;
         }
     }
 }
