@@ -19,6 +19,8 @@ namespace alert_roster.web.Models
 
         public DbSet<User> Users { get; set; }
 
+        public DbSet<Group> Groups { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<AlertRosterDbContext, Configuration>());

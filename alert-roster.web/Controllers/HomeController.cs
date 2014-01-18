@@ -14,6 +14,7 @@ namespace alert_roster.web.Controllers
     {
         private static readonly Logger log = LogManager.GetCurrentClassLogger();
 
+        [HttpGet]
         public ActionResult Index()
         {
             using (var db = new AlertRosterDbContext())
@@ -24,13 +25,13 @@ namespace alert_roster.web.Controllers
             }
         }
 
-        [AllowAnonymous]
+        [HttpGet, AllowAnonymous]
         public ActionResult About()
         {
             return View();
         }
 
-        [AllowAnonymous]
+        [HttpGet, AllowAnonymous]
         public ActionResult Login()
         {
             return View();
@@ -44,13 +45,13 @@ namespace alert_roster.web.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize(Users = Authentication.ReadWriteRole)]
+        [HttpGet, Authorize(Users = Authentication.ReadWriteRole)]
         public ActionResult New()
         {
             return View();
         }
 
-        [Authorize(Users = Authentication.ReadWriteRole), HttpPost, ValidateAntiForgeryToken]
+        [HttpGet, Authorize(Users = Authentication.ReadWriteRole), HttpPost, ValidateAntiForgeryToken]
         public ActionResult New([Bind(Include = "Content")]Message message)
         {
             if (ModelState.IsValid)
@@ -75,6 +76,7 @@ namespace alert_roster.web.Controllers
             return View(message);
         }
 
+        [HttpGet]
         public ActionResult Subscription(int? ID)
         {
             using (var db = new AlertRosterDbContext())
@@ -114,7 +116,7 @@ namespace alert_roster.web.Controllers
             }
         }
 
-        [Authorize(Users = Authentication.ReadWriteRole)]
+        [HttpGet, Authorize(Users = Authentication.ReadWriteRole)]
         public ActionResult Subscriptions()
         {
             using (var db = new AlertRosterDbContext())
@@ -126,6 +128,7 @@ namespace alert_roster.web.Controllers
         // For now, unsubscribe is handled through MailGun's injected links
         // We will still try and send the notifications but they won't make it through
 
+        [HttpGet]
         public ActionResult Unsubscribe(int ID)
         {
             using (var db = new AlertRosterDbContext())
@@ -138,6 +141,37 @@ namespace alert_roster.web.Controllers
                 TempData["Message"] = "Successfully unsubscribed!";
 
                 return RedirectToAction("Subscriptions");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Groups()
+        {
+            using (var db = new AlertRosterDbContext())
+            {
+                return View(db.Groups.ToList());
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Group(int? ID)
+        {
+            using (var db = new AlertRosterDbContext())
+            {
+                var group = db.Groups.SingleOrDefault(g => g.ID == ID);
+
+                return View(group);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Group(Group group)
+        {
+            using (var db = new AlertRosterDbContext())
+            {
+                // TODO Create/Update group
+
+                return View();
             }
         }
 
