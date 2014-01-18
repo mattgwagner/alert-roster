@@ -137,5 +137,17 @@ namespace alert_roster.web.Controllers
                 return RedirectToAction("Subscriptions");
             }
         }
+
+        [HttpPost]
+        public ActionResult IncomingMessage(String To, String From, String Body)
+        {
+            // Check FROM to see if they're a group member
+
+            // Do the requested action
+
+            // respond with confirmation message if required
+
+            return Content(@"<response></response>", "text/xml");
+        }
     }
 }
