@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace alert_roster.web.Models
 {
     public class EmailSender
     {
+        private static readonly Logger log = LogManager.GetCurrentClassLogger();
+
         public static String EmailSubject = ConfigurationManager.AppSettings["Email.Subject"];
 
         public static String FromAddress = ConfigurationManager.AppSettings["Email.FromAddress"];

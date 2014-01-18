@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace alert_roster.web.Models
 {
     public class Authentication
     {
+        private static readonly Logger log = LogManager.GetCurrentClassLogger();
+
         public const String ReadOnlyRole = "ReadOnly";
 
         public const String ReadWriteRole = "ReadWrite";

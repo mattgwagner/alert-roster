@@ -1,4 +1,5 @@
 ﻿using alert_roster.web.Models;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -11,6 +12,8 @@ namespace alert_roster.web.Controllers
 {
     public class HomeController : Controller
     {
+        private static readonly Logger log = LogManager.GetCurrentClassLogger();
+
         public ActionResult Index()
         {
             using (var db = new AlertRosterDbContext())

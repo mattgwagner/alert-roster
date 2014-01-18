@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,8 @@ namespace alert_roster.web
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        private static readonly Logger log = LogManager.GetCurrentClassLogger();
+
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -20,6 +23,11 @@ namespace alert_roster.web
 
             GlobalFilters.Filters.Add(new HandleErrorAttribute());
             GlobalFilters.Filters.Add(new AuthorizeAttribute());
+        }
+
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            log.ErrorException("Caught unhandled exception", Server.GetLastError());
         }
 
         public static void RegisterRoutes(RouteCollection routes)
