@@ -145,7 +145,7 @@ namespace alert_roster.web.Controllers
 
             // Do the requested action
 
-            // respond with confirmation message if required
+            // respond with confirmation message if required by adding <message>content</message> to the response
 
             return Content(@"<response></response>", "text/xml");
         }
