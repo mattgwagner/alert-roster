@@ -107,7 +107,7 @@ namespace alert_roster.web.Controllers
         [HttpGet, Authorize(Users = Authentication.ReadWriteRole)]
         public ActionResult Subscriptions()
         {
-            return View(db.Users.ToList());
+            return View(db.Users.OrderBy(u => u.Name).ToList());
         }
 
         // For now, unsubscribe is handled through MailGun's injected links
