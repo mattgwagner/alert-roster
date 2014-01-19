@@ -16,7 +16,7 @@ namespace alert_roster.web.Controllers
         private readonly AlertRosterDbContext db = new AlertRosterDbContext();
 
         [HttpGet, Authorize(Users = Authentication.ReadWriteRole)]
-        public ActionResult Subscriptions()
+        public ActionResult Index()
         {
             return View(db.Users.OrderBy(u => u.Name).ToList());
         }
