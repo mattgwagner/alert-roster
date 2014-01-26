@@ -27,6 +27,8 @@ namespace alert_roster.web
 
             GlobalFilters.Filters.Add(new HandleErrorAttribute());
             GlobalFilters.Filters.Add(new AuthorizeAttribute());
+
+            log.Info("Application started.");
         }
 
         protected void Application_Error(object sender, EventArgs e)
@@ -65,11 +67,23 @@ namespace alert_roster.web
 
             var config = new NLog.Config.LoggingConfiguration();
 
-#if (!DEBUG)
-            // Database target?
+#if (DEBUG)
+            var databaseTarget = new DatabaseTarget
+            {
+                ConnectionStringName = "MainDb",
+                CommandText = ""
+            };
+
+            var dbRule = new LoggingRule("*", LogLevel.Warn, databaseTarget);
+
+            config.LoggingRules.Add(dbRule);
 #endif
 
-            var fileTarget = new FileTarget { CreateDirs = true, FileName = "Log.txt" };
+            var fileTarget = new FileTarget
+            {
+                CreateDirs = true,
+                FileName = "Log.txt"
+            };
 
             config.AddTarget("fileTarget", fileTarget);
 
