@@ -14,6 +14,8 @@ namespace alert_roster.web.Controllers
 
         private readonly AlertRosterDbContext db = new AlertRosterDbContext();
 
+        public static String IncomingSmsResponse = "Message received!";
+
         [HttpGet, Authorize(Users = Authentication.ReadWriteRole)]
         public ActionResult New()
         {
@@ -57,7 +59,7 @@ namespace alert_roster.web.Controllers
 
             // respond with confirmation message if required by adding <message>content</message> to the response
 
-            return Content(@"<response></response>", "text/xml");
+            return Content(String.Format(@"<response>{0}</response>", IncomingSmsResponse), "text/xml");
         }
     }
 }
