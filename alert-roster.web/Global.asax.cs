@@ -67,7 +67,7 @@ namespace alert_roster.web
 
             var config = new NLog.Config.LoggingConfiguration();
 
-#if (DEBUG)
+#if (!DEBUG)
             var databaseTarget = new DatabaseTarget
             {
                 ConnectionStringName = "MainDb",
