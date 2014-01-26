@@ -47,6 +47,8 @@ namespace alert_roster.web.Controllers
         [HttpPost]
         public ActionResult IncomingMessage(String To, String From, String Body)
         {
+            log.Info("Incoming message (From: {0}) (To: {1}) (Body: {2})", From, To, Body);
+
             // TODO Process incoming messages
 
             // For now, just shoot me an email with the content
