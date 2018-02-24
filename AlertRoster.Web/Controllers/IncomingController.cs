@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Twilio.AspNet.Common;
@@ -20,16 +19,6 @@ namespace AlertRoster.Web.Controllers
         public IncomingController(Database db)
         {
             this.db = db;
-        }
-
-        [HttpGet(template: "/api"), AllowAnonymous]
-        public dynamic HandleGet()
-        {
-            return new
-            {
-                Machine = Environment.MachineName,
-                Timestamp = DateTimeOffset.UtcNow
-            };
         }
 
         [HttpPost(template: "/api/incoming"), AllowAnonymous]
@@ -93,8 +82,6 @@ namespace AlertRoster.Web.Controllers
             else
             {
                 db.Messages.Add(new Message(group.Id, member.Id, content));
-
-                // TODO Dispatch to the new message from the subscriber to the Twilio sender
             }
 
             await db.SaveChangesAsync();
