@@ -9,7 +9,7 @@ using Twilio.AspNet.Common;
 using Twilio.AspNet.Core;
 using Twilio.TwiML;
 
-namespace AlertRoster.Web.Commands
+namespace AlertRoster.Web.Controllers
 {
     public class IncomingController : TwilioController
     {
