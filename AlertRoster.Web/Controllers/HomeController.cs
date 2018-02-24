@@ -27,7 +27,7 @@ namespace AlertRoster.Web.Controllers
             };
         }
 
-        [HttpGet("/api/groups/{id}")]
+        [HttpGet("/api/groups/{id:int?}")]
         public dynamic GetGroups(int? id)
         {
             return
