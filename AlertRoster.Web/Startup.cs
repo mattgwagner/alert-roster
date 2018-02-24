@@ -3,9 +3,11 @@ using AlertRoster.Web.Models;
 using FluentScheduler;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Converters;
+using System;
 
 namespace AlertRoster.Web
 {
@@ -19,9 +21,12 @@ namespace AlertRoster.Web
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+            IsDevelopment = env.IsDevelopment();
         }
 
         public IConfigurationRoot Configuration { get; }
+
+        public Boolean IsDevelopment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
@@ -29,7 +34,17 @@ namespace AlertRoster.Web
         {
             services.AddDbContext<Database>();
 
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                if (!IsDevelopment)
+                {
+                    options.Filters.Add(new RequireHttpsAttribute { });
+                }
+            })
+            .AddJsonOptions(options =>
+            {
+                options.SerializerSettings.Converters.Add(new StringEnumConverter { });
+            });
 
             services.AddOptions();
 
@@ -47,7 +62,7 @@ namespace AlertRoster.Web
             app.UseMvc();
 
             Database.Init(db);
-            
+
             JobManager.Initialize(new JobRegistry(app.ApplicationServices));
         }
     }
