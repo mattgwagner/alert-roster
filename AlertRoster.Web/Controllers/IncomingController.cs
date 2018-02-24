@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System.Linq;
 using System.Threading.Tasks;
 using Twilio.AspNet.Common;
 using Twilio.AspNet.Core;
+using Twilio.Security;
 using Twilio.TwiML;
 
 namespace AlertRoster.Web.Controllers
@@ -15,15 +17,22 @@ namespace AlertRoster.Web.Controllers
         // Messages: Subscribe, Unsubscribe, Content, Add User, List Users?
 
         private readonly Database db;
+        private readonly IOptions<Settings> settings;
 
-        public IncomingController(Database db)
+        public IncomingController(Database db, IOptions<Settings> settings)
         {
             this.db = db;
+            this.settings = settings;
         }
 
         [HttpPost(template: "/api/incoming"), AllowAnonymous]
         public virtual async Task<IActionResult> Handle(SmsRequest request)
         {
+            var validator = new RequestValidator(settings.Value.Twilio.AuthToken);
+
+#if RELEASE
+            // TODO Request validation
+#endif
             var to = request.To;
 
             var from = request.From;
