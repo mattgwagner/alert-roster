@@ -8,6 +8,8 @@ namespace AlertRoster.Web.Models
 
         public virtual DbSet<Member> Members { get; set; }
 
+        public virtual DbSet<MemberGroup> MemberGroups { get; set; }
+
         public virtual DbSet<Message> Messages { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -48,8 +48,7 @@ namespace AlertRoster.Web.Controllers
             var member =
                 group
                 .Members
-                .Select(_ => _.Member)
-                .Where(_ => _.PhoneNumber == from)
+                .Where(_ => _.Member.PhoneNumber == from)
                 .SingleOrDefault();
 
             // TODO Twilio can handle industry-standard unsubscribe requests, research this.
@@ -57,12 +56,13 @@ namespace AlertRoster.Web.Controllers
             if (member != null)
             {
                 // Hmm, not currently in the group, check if they exist elsewhere
+                // They could be in multiple other groups, so we use First here
 
                 member =
                     await db
-                    .Members
-                    .Where(_ => _.PhoneNumber == from)
-                    .SingleOrDefaultAsync();
+                    .MemberGroups
+                    .Where(_ => _.Member.PhoneNumber == from)
+                    .FirstOrDefaultAsync();
 
                 if (member == null)
                 {
@@ -70,18 +70,22 @@ namespace AlertRoster.Web.Controllers
 
                     // FIXME We're assuming right now that the first message will be their display name
 
-                    member = new Member(from, content);
+                    var tracker = db.Members.Add(new Member(from, content)));
+
+                    member = new MemberGroup(tracker.Entity.Id, group.Id);
+
+                    await db.SaveChangesAsync();
                 }
 
                 response.Message($"Thank you for subscribing to {group.DisplayName}!");
 
-                group.Members.Add(new MemberGroup(member.Id, group.Id));
+                group.Members.Add(new MemberGroup(member.MemberId, group.Id));
 
-                group.Messages.Add(new Message(group.Id, member.Id, "Joined the group."));
+                group.Messages.Add(new Message(group.Id, member.MemberId, "Joined the group."));
             }
             else
             {
-                db.Messages.Add(new Message(group.Id, member.Id, content));
+                db.Messages.Add(new Message(group.Id, member.MemberId, content));
             }
 
             await db.SaveChangesAsync();
