@@ -52,9 +52,12 @@ namespace AlertRoster.Web.Controllers
         }
 
         [HttpPost("/api/groups")]
-        public async Task<IActionResult> CreateGroup(String displayName)
+        public async Task<dynamic> CreateGroup([FromBody]Group group)
         {
-            var result = db.Groups.Add(new Group(displayName));
+            var result = db.Groups.Add(new Group(group.DisplayName)
+            {
+                PhoneNumber = group.PhoneNumber
+            });
 
             await db.SaveChangesAsync();
 
