@@ -12,7 +12,7 @@ build:
   verbosity: minimal
 
 after_build:
-- ps: .\Test.ps1 -Configuration Release
+#- ps: .\Test.ps1 -Configuration Release
 - ps: .\Package.ps1 -Configuration Release
 
 test: off
