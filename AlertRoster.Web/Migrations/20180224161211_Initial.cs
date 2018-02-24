@@ -41,7 +41,8 @@ namespace AlertRoster.Web.Migrations
                 columns: table => new
                 {
                     MemberId = table.Column<int>(nullable: false),
-                    GroupId = table.Column<int>(nullable: false)
+                    GroupId = table.Column<int>(nullable: false),
+                    Role = table.Column<byte>(nullable: false)
                 },
                 constraints: table =>
                 {

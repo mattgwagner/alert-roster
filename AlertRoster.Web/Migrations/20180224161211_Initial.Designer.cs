@@ -10,8 +10,8 @@ using System;
 
 namespace AlertRoster.Web.Migrations
 {
-    [DbContext(typeof(Models.Database))]
-    [Migration("20180224104851_Initial")]
+    [DbContext(typeof(Database))]
+    [Migration("20180224161211_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,6 +65,8 @@ namespace AlertRoster.Web.Migrations
                     b.Property<int>("MemberId");
 
                     b.Property<int>("GroupId");
+
+                    b.Property<byte>("Role");
 
                     b.HasKey("MemberId", "GroupId");
 

@@ -65,6 +65,8 @@ namespace AlertRoster.Web.Migrations
 
                     b.Property<int>("GroupId");
 
+                    b.Property<byte>("Role");
+
                     b.HasKey("MemberId", "GroupId");
 
                     b.HasIndex("GroupId");
