@@ -10,6 +10,8 @@
 
         public virtual Group Group { get; private set; }
 
+        public GroupRole Role { get; set; } = GroupRole.Member;
+
         private MemberGroup()
         {
             // Parameter-less ctor for EF
@@ -19,6 +21,13 @@
         {
             this.MemberId = memberId;
             this.GroupId = groupId;
+        }
+
+        public enum GroupRole : byte
+        {
+            Member = 0,
+
+            Administrator = 1
         }
     }
 }
