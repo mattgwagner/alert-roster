@@ -44,7 +44,7 @@ namespace AlertRoster.Web.Commands
 
             foreach (var message in Get_Unsent())
             {
-                foreach (var recipient in message.Group.Members.Select(_ => _.Member))
+                foreach (var recipient in Get_Recipients(message))
                 {
                     // Don't send the sender their own message back
 
@@ -62,6 +62,22 @@ namespace AlertRoster.Web.Commands
             }
 
             db.SaveChanges();
+        }
+
+        private IEnumerable<Member> Get_Recipients(Message message)
+        {
+            switch (message.Group.Replies)
+            {
+                case Group.ReplyMode.ReplyAll:
+                    return message.Group.Members.Select(_ => _.Member);
+
+                case Group.ReplyMode.ReplyToAdmins:
+                    return message.Group.Admins;
+
+                case Group.ReplyMode.Reject:
+                default:
+                    return Enumerable.Empty<Member>();
+            }
         }
 
         private ITwilioRestClient Get_Client()
