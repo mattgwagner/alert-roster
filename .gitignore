@@ -188,3 +188,4 @@ pip-log.txt
 *.db
 ngrok.exe
 AlertRoster.Web/appsettings.Development.json
+.vs
