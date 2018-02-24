@@ -189,3 +189,4 @@ pip-log.txt
 ngrok.exe
 AlertRoster.Web/appsettings.Development.json
 .vs
+output
