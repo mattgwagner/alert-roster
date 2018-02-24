@@ -10,7 +10,7 @@ using System;
 
 namespace AlertRoster.Web.Migrations
 {
-    [DbContext(typeof(Models.Database))]
+    [DbContext(typeof(Database))]
     partial class DatabaseModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -31,6 +31,8 @@ namespace AlertRoster.Web.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasMaxLength(25);
 
+                    b.Property<byte>("Replies");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DisplayName")
@@ -48,10 +50,14 @@ namespace AlertRoster.Web.Migrations
                         .IsRequired()
                         .HasMaxLength(20);
 
+                    b.Property<int?>("GroupId");
+
                     b.Property<string>("PhoneNumber")
                         .HasMaxLength(20);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
 
                     b.HasIndex("PhoneNumber")
                         .IsUnique();
@@ -71,7 +77,7 @@ namespace AlertRoster.Web.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("MemberGroup");
+                    b.ToTable("MemberGroups");
                 });
 
             modelBuilder.Entity("AlertRoster.Web.Models.Message", b =>
@@ -97,6 +103,13 @@ namespace AlertRoster.Web.Migrations
                     b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("AlertRoster.Web.Models.Member", b =>
+                {
+                    b.HasOne("AlertRoster.Web.Models.Group")
+                        .WithMany("Admins")
+                        .HasForeignKey("GroupId");
                 });
 
             modelBuilder.Entity("AlertRoster.Web.Models.MemberGroup", b =>

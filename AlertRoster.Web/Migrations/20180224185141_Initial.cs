@@ -15,7 +15,8 @@ namespace AlertRoster.Web.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     DisplayName = table.Column<string>(maxLength: 25, nullable: false),
-                    PhoneNumber = table.Column<string>(maxLength: 25, nullable: true)
+                    PhoneNumber = table.Column<string>(maxLength: 25, nullable: true),
+                    Replies = table.Column<byte>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,15 +30,22 @@ namespace AlertRoster.Web.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     DisplayName = table.Column<string>(maxLength: 20, nullable: false),
+                    GroupId = table.Column<int>(nullable: true),
                     PhoneNumber = table.Column<string>(maxLength: 20, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Members", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Members_Groups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Groups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "MemberGroup",
+                name: "MemberGroups",
                 columns: table => new
                 {
                     MemberId = table.Column<int>(nullable: false),
@@ -46,15 +54,15 @@ namespace AlertRoster.Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MemberGroup", x => new { x.MemberId, x.GroupId });
+                    table.PrimaryKey("PK_MemberGroups", x => new { x.MemberId, x.GroupId });
                     table.ForeignKey(
-                        name: "FK_MemberGroup_Groups_GroupId",
+                        name: "FK_MemberGroups_Groups_GroupId",
                         column: x => x.GroupId,
                         principalTable: "Groups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MemberGroup_Members_MemberId",
+                        name: "FK_MemberGroups_Members_MemberId",
                         column: x => x.MemberId,
                         principalTable: "Members",
                         principalColumn: "Id",
@@ -97,8 +105,13 @@ namespace AlertRoster.Web.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_MemberGroup_GroupId",
-                table: "MemberGroup",
+                name: "IX_MemberGroups_GroupId",
+                table: "MemberGroups",
+                column: "GroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Members_GroupId",
+                table: "Members",
                 column: "GroupId");
 
             migrationBuilder.CreateIndex(
@@ -121,16 +134,16 @@ namespace AlertRoster.Web.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "MemberGroup");
+                name: "MemberGroups");
 
             migrationBuilder.DropTable(
                 name: "Messages");
 
             migrationBuilder.DropTable(
-                name: "Groups");
+                name: "Members");
 
             migrationBuilder.DropTable(
-                name: "Members");
+                name: "Groups");
         }
     }
 }
