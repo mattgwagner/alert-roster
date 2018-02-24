@@ -28,7 +28,6 @@ namespace AlertRoster.Web.Models
         {
             this.PhoneNumber = phoneNumber;
             this.DisplayName = displayName;
-            this.Groups = new List<MemberGroup>();
         }
     }
 }

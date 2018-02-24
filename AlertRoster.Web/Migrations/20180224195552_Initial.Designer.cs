@@ -11,7 +11,7 @@ using System;
 namespace AlertRoster.Web.Migrations
 {
     [DbContext(typeof(Models.Database))]
-    [Migration("20180224185141_Initial")]
+    [Migration("20180224195552_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
