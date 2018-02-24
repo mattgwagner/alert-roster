@@ -48,7 +48,9 @@ namespace AlertRoster.Web.Commands
                 {
                     // Don't send the sender their own message back
 
-                    if (message.SenderId != recipient.Id)
+                    // HACK: For testing also echo it back
+
+                    if (true || message.SenderId != recipient.Id)
                     {
                         MessageResource.Create(
                             to: new Twilio.Types.PhoneNumber(recipient.PhoneNumber),
