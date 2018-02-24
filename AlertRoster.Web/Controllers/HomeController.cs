@@ -10,8 +10,6 @@ namespace AlertRoster.Web.Controllers
 {
     public class HomeController : Controller
     {
-        // List/Add/Remove Members
-
         private readonly Database db;
 
         public HomeController(Database db)
