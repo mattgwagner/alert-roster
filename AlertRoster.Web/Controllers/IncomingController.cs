@@ -81,11 +81,13 @@ namespace AlertRoster.Web.Controllers
 
                     // FIXME We're assuming right now that the first message will be their display name
 
-                    var tracker = db.Members.Add(new Member(from, content));
+                    var new_member = new Member(from, content);
 
-                    member = new MemberGroup(tracker.Entity.Id, group.Id);
+                    db.Members.Add(new_member);
 
                     await db.SaveChangesAsync();
+
+                    member = new MemberGroup(new_member.Id, group.Id);
                 }
 
                 response.Message($"Thank you for subscribing to {group.DisplayName}!");
