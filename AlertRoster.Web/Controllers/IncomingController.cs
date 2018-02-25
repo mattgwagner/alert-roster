@@ -44,7 +44,8 @@ namespace AlertRoster.Web.Controllers
             var group =
                 await db
                 .Groups
-                .Include(g => g.Members.Select(gm => gm.Member))
+                .Include(_ => _.Members)
+                .ThenInclude(_ => _.Member)
                 .Where(_ => _.PhoneNumber == to)
                 .SingleOrDefaultAsync();
 
@@ -63,7 +64,7 @@ namespace AlertRoster.Web.Controllers
 
             // TODO Twilio can handle industry-standard unsubscribe requests, research this.
 
-            if (member != null)
+            if (member == null)
             {
                 // Hmm, not currently in the group, check if they exist elsewhere
                 // They could be in multiple other groups, so we use First here
