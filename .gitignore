@@ -190,3 +190,4 @@ ngrok.exe
 AlertRoster.Web/appsettings.Development.json
 .vs
 output
+AlertRoster.Web/appsettings.Production.json

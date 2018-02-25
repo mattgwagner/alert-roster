@@ -18,7 +18,7 @@ namespace AlertRoster.Web.Models
 
         public virtual ICollection<MemberGroup> Members { get; private set; }
 
-        public virtual IEnumerable<Member> Admins => Members.Where(_ => _.Role == MemberGroup.GroupRole.Administrator).Select(_ => _.Member);
+        public virtual IEnumerable<Member> Admins => Members?.Where(_ => _.Role == MemberGroup.GroupRole.Administrator).Select(_ => _.Member);
 
         public virtual ICollection<Message> Messages { get; private set; }
 
