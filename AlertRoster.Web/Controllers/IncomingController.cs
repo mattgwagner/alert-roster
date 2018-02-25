@@ -44,6 +44,7 @@ namespace AlertRoster.Web.Controllers
             var group =
                 await db
                 .Groups
+                .Include(g => g.Members.Select(gm => gm.Member))
                 .Where(_ => _.PhoneNumber == to)
                 .SingleOrDefaultAsync();
 
