@@ -92,6 +92,7 @@ namespace AlertRoster.Web.Controllers
             return
                 await db
                 .Messages
+                .Include(msg => msg.Sender)
                 .Where(msg => msg.GroupId == id)
                 .Where(msg => !since.HasValue || msg.Timestamp >= since)
                 .Select(msg => new
