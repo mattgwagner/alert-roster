@@ -46,6 +46,7 @@ namespace AlertRoster.Web.Controllers
                 .Groups
                 .Include(_ => _.Members)
                 .ThenInclude(_ => _.Member)
+                .Include(_ => _.Messages)
                 .Where(_ => _.PhoneNumber == to)
                 .SingleOrDefaultAsync();
 
@@ -59,7 +60,8 @@ namespace AlertRoster.Web.Controllers
             var member =
                 group
                 .Members
-                .Where(_ => _.Member.PhoneNumber == from)
+                .Select(_ => _.Member)
+                .Where(_ => _.PhoneNumber == from)
                 .SingleOrDefault();
 
             // TODO Twilio can handle industry-standard unsubscribe requests, research this.
@@ -71,9 +73,8 @@ namespace AlertRoster.Web.Controllers
 
                 member =
                     await db
-                    .MemberGroups
-                    .Include(_ => _.Member)
-                    .Where(_ => _.Member.PhoneNumber == from)
+                    .Members
+                    .Where(_ => _.PhoneNumber == from)
                     .FirstOrDefaultAsync();
 
                 if (member == null)
@@ -82,24 +83,22 @@ namespace AlertRoster.Web.Controllers
 
                     // FIXME We're assuming right now that the first message will be their display name
 
-                    var new_member = new Member(from, content);
+                    member = new Member(from, content);
 
-                    db.Members.Add(new_member);
+                    db.Members.Add(member);
 
                     await db.SaveChangesAsync();
-
-                    member = new MemberGroup(new_member.Id, group.Id);
                 }
 
                 response.Message($"Thank you for subscribing to {group.DisplayName}!");
 
-                group.Members.Add(new MemberGroup(member.MemberId, group.Id));
+                group.Members.Add(new MemberGroup(member.Id, group.Id));
 
-                group.Messages.Add(new Message(group.Id, member.MemberId, "Joined the group."));
+                group.Messages.Add(new Message(group.Id, member.Id, "Joined the group."));
             }
             else
             {
-                db.Messages.Add(new Message(group.Id, member.MemberId, content));
+                db.Messages.Add(new Message(group.Id, member.Id, content));
             }
 
             await db.SaveChangesAsync();
