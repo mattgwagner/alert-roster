@@ -72,6 +72,7 @@ namespace AlertRoster.Web.Controllers
                 member =
                     await db
                     .MemberGroups
+                    .Include(_ => _.Member)
                     .Where(_ => _.Member.PhoneNumber == from)
                     .FirstOrDefaultAsync();
 
